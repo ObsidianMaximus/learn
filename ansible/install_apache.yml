@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update local repo cache
+    apt:
+      update_cache: yes
+
+  - name: Install Apache server
+    apt:
+      name: apache2
+      state: latest
+  
+  # - name: Remove Apache server
+    # apt:
+      # name: apache2
+      # state: absent
