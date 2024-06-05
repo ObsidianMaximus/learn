@@ -1,3 +1,8 @@
+[web_server]
 t1@10.0.2.15
+
+[db_server]
 t2@10.0.2.4
+
+[extra_server]
 t3

@@ -1,0 +1,41 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:                                              # Mandate to always run the following stuff first. 
+
+  - name: Update local repo cache
+    package:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"  # 'when' is used when we want to run the command only against some specific parameters. Use 'and' to run multiple check statements with 'when'.
+
+- hosts: [web_server]
+  become: true
+  tasks:
+
+  - name: Update cache and install Apache server along with htop and neofetch
+    package:                                                        # or we can also use 'package:' as then, this 'package' module will look for the package manager used by the underlying host system and use it directly.
+      name: 
+        - apache2
+        - htop
+        - neofetch
+      state: latest
+    when: ansible_distribution in ["Debian","Ubuntu"]           # Can you '=='for a single var, and 'in' for more than a single var
+  
+- hosts: [db_server]
+  become: true
+  tasks:
+
+  - name: Install Mysql
+    package:                                                        # or we can also use 'package:' as then, this 'package' module will look for the package manager used by the underlying host system and use it directly.
+      name: 
+        - mysql*
+        - htop
+        - neofetch
+      state: latest
+    when: ansible_distribution in ["Debian","Ubuntu"]           # Can you '=='for a single var, and 'in' for more than a single var 
+  # - name: Remove Apache server
+    # package:
+      # name: apache2
+      # state: absent
