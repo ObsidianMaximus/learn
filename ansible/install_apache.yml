@@ -7,11 +7,14 @@
   - name: Update local repo cache
     apt:
       update_cache: yes
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "22.04"  # 'when' is used when we want to run the command only against some specific parameters. Use 'and' to run multiple check statements with 'when'.
 
   - name: Install Apache server
     apt:
       name: apache2
       state: latest
+    when: ansible_distribution in ["Debian","Ubuntu"]           # Can you '=='for a single var, and 'in' for more than a single var
+  
   
   # - name: Remove Apache server
     # apt:
