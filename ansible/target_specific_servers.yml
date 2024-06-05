@@ -5,6 +5,7 @@
   pre_tasks:                                              # Mandate to always run the following stuff first. 
 
   - name: Update local repo cache
+    tags: update, everything
     package:
       upgrade: dist
       update_cache: yes
@@ -15,6 +16,7 @@
   tasks:
 
   - name: Update cache and install Apache server along with htop and neofetch
+    tags: apache2, htop, neofetch, web
     package:                                                        # or we can also use 'package:' as then, this 'package' module will look for the package manager used by the underlying host system and use it directly.
       name: 
         - apache2
@@ -28,6 +30,7 @@
   tasks:
 
   - name: Install Mysql
+    tags: mysql, htop, neofetch, database
     package:                                                        # or we can also use 'package:' as then, this 'package' module will look for the package manager used by the underlying host system and use it directly.
       name: 
         - mysql*
