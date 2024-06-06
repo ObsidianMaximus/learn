@@ -52,3 +52,25 @@
     # package:
       # name: apache2
       # state: absent
+
+- hosts: [workstation]
+  become: true
+  tasks:
+
+  - name: Install unzip
+    tags: zip
+    package:
+      name:
+        - unzip
+      state: latest
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+    
+  - name: Download and unzip terraform
+    tags: zip, terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_linux_amd64.zip
+      dest: /usr/bin
+      remote_src: true
+      owner: root
+      group: root
+      mode: 0755

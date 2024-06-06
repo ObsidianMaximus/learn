@@ -6,3 +6,6 @@ t2@10.0.2.4
 
 [extra_server]
 t3
+
+[workstation]
+10.0.2.6
