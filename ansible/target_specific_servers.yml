@@ -34,7 +34,27 @@
       owner: root
       group: root
       mode: 0644
-  
+
+  - name: Change e-mail address in apache config
+    tags: apache, lineinfile, regexp
+
+    lineinfile:
+      path: /etc/apache2/sites-available/000-default.conf
+      regexp: '^ServerAdmin'                                # Look for the line with 'ServerAdmin' in the start
+      line: ServerAdmin example@example.org                 # Change that above found line to this instead
+    when: ansible_distribution == "Ubuntu"   
+    register: apache                                        # Register any changes in a new variable and name it as 'apache'
+
+  - name: Restart apache2
+    tags: apache, service
+
+    service:
+      name: apache2
+      state: restarted
+      enabled: yes
+    when: apache.changed
+
+
 - hosts: [db_server]
   become: true
   tasks:
