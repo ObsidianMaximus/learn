@@ -25,6 +25,16 @@
       state: latest
     when: ansible_distribution in ["Debian","Ubuntu"]           # Can you '=='for a single var, and 'in' for more than a single var
   
+  - name: Copy files
+    tags: copy, apache2
+
+    copy:
+      src: site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+  
 - hosts: [db_server]
   become: true
   tasks:
